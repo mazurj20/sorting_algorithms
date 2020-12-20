@@ -1,0 +1,26 @@
+.SortingVisualizer_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.array-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 90vw;
+  height: 80vh;
+}
+
+.array-bar {
+  width: 1.5vw;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+.buttons {
+  padding: 5px;
+}
+
+.buttons > button {
+  margin: 5px;
+}
