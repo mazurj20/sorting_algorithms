@@ -3,9 +3,9 @@ import getMergeSortAnimations from "../SortingAlgorithms/MergeSort.js";
 import getSelectionSortAnimations from "../SortingAlgorithms/SelectionSort";
 import "./SortingVisualizer.css";
 
-const speed = 1000;
+const speed = 200;
 
-const numOfBars = 20;
+const numOfBars = 10;
 
 const primaryColor = "rgb(54, 179, 184)";
 
@@ -26,6 +26,28 @@ const SortingVisualizer = () => {
     setArray(newArray);
   };
 
+  const randomIntFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  const mergeSort = () => {
+    const animations = getMergeSortAnimations(array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array-bar");
+      setTimeout(() => {
+        const barOneStyle = arrayBars[animations[i].leftIdx].style;
+        const barTwoStyle = arrayBars[animations[i].rightIdx].style;
+        if (animations[i].swap) {
+          barOneStyle.height = `${animations[i].rightValue}vh`;
+          barTwoStyle.height = `${animations[i].leftValue}vh`;
+        }
+        console.log();
+        //barOneStyle.backgroundColor = primaryColor;
+        //barTwoStyle.backgroundColor = primaryColor;
+      }, i * speed);
+    }
+  };
   const selectionSort = () => {
     const animations = getSelectionSortAnimations(array);
     console.log(animations);
@@ -85,7 +107,3 @@ const SortingVisualizer = () => {
 };
 
 export default SortingVisualizer;
-
-const randomIntFromInterval = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};

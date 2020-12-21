@@ -16,6 +16,4 @@ const selectionSort = (arr) => {
   return animations;
 };
 
-console.log(selectionSort([2, 5, 1, 3, 6]));
-
 export default selectionSort;
