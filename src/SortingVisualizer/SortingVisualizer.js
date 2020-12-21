@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import getMergeSortAnimations from "../SortingAlgorithms/MergeSort.js";
 import getSelectionSortAnimations from "../SortingAlgorithms/SelectionSort";
+import getBubbleSortAnimations from "../SortingAlgorithms/BubbleSort";
+
 import "./SortingVisualizer.css";
 
-const speed = 200;
+const speed = 1;
 
-const numOfBars = 10;
+const numOfBars = 30;
 
 const primaryColor = "rgb(54, 179, 184)";
 
@@ -30,30 +32,12 @@ const SortingVisualizer = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  const mergeSort = () => {
-    const animations = getMergeSortAnimations(array);
-    console.log(animations);
-    for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array-bar");
-      setTimeout(() => {
-        const barOneStyle = arrayBars[animations[i].leftIdx].style;
-        const barTwoStyle = arrayBars[animations[i].rightIdx].style;
-        if (animations[i].swap) {
-          barOneStyle.height = `${animations[i].rightValue}vh`;
-          barTwoStyle.height = `${animations[i].leftValue}vh`;
-        }
-        console.log();
-        //barOneStyle.backgroundColor = primaryColor;
-        //barTwoStyle.backgroundColor = primaryColor;
-      }, i * speed);
-    }
-  };
+  const mergeSort = () => {};
+
   const selectionSort = () => {
     const animations = getSelectionSortAnimations(array);
-    console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array-bar");
-      console.log(arrayBars);
       if (animations[i].length === 4) {
         setTimeout(() => {
           const barOneStyle = arrayBars[animations[i][0]].style;
@@ -78,7 +62,31 @@ const SortingVisualizer = () => {
 
   const heapSort = () => {};
 
-  const bubbleSort = () => {};
+  const bubbleSort = async () => {
+    const { animations, sortedArray } = await getBubbleSortAnimations(array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array-bar");
+      setTimeout(() => {
+        const barOneStyle = arrayBars[animations[i].leftIdx].style;
+        const barTwoStyle = arrayBars[animations[i].rightIdx].style;
+        if (
+          animations[i].swap &&
+          barOneStyle.backgroundColor === primaryColor
+        ) {
+          let temp = barOneStyle.height;
+          barOneStyle.height = barTwoStyle.height;
+          barTwoStyle.height = temp;
+        }
+        barOneStyle.backgroundColor === secondaryColor
+          ? (barOneStyle.backgroundColor = primaryColor)
+          : (barOneStyle.backgroundColor = secondaryColor);
+        if (i === animations.length - 1) {
+          setArray(sortedArray);
+        }
+      }, i * speed);
+    }
+  };
 
   return (
     <div className="SortingVisualizer_container">

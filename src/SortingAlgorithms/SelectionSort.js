@@ -1,4 +1,5 @@
 const selectionSort = (arr) => {
+  console.log(arr);
   let animations = [];
   for (let i = 0; i < arr.length; i++) {
     let min_idx = i;
