@@ -1,51 +1,36 @@
-const bubbleSort = (unsortedArray) => {
-  console.log(unsortedArray);
-  //make into an array of objects
-  let arr = [];
+const bubbleSort = (arr) => {
   let animations = [];
-  for (let i = 0; i < unsortedArray.length; i++) {
-    arr.push({
-      idx: i,
-      value: unsortedArray[i],
-    });
-  }
-
-  let len = arr.length;
-  for (let i = 0; i < len; i++) {
-    for (let j = 0; j < len - i - 1; j++) {
-      if (arr[j].value > arr[j + 1].value) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
         animations.push({
-          leftIdx: arr[j].idx,
-          rightIdx: arr[j + 1].idx,
+          leftIdx: j,
+          rightIdx: j + 1,
           swap: true,
         });
         animations.push({
-          leftIdx: arr[j].idx,
-          rightIdx: arr[j + 1].idx,
+          leftIdx: j,
+          rightIdx: j + 1,
           swap: true,
         });
-        let tmp = arr[j].value;
-        arr[j].value = arr[j + 1].value;
-        arr[j + 1].value = tmp;
+        let tmp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = tmp;
       } else {
         animations.push({
-          leftIdx: arr[j].idx,
-          rightIdx: arr[j + 1].idx,
+          leftIdx: j,
+          rightIdx: j + 1,
           swap: false,
         });
         animations.push({
-          leftIdx: arr[j].idx,
-          rightIdx: arr[j + 1].idx,
+          leftIdx: j,
+          rightIdx: j + 1,
           swap: false,
         });
       }
     }
   }
-  let sortedArray = [];
-  for (let i = 0; i < arr.length; i++) {
-    sortedArray.push(arr[i].value);
-  }
-  return { animations: animations, sortedArray: sortedArray };
+  return animations;
 };
 
 export default bubbleSort;
