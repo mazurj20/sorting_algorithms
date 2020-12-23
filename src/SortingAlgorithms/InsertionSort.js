@@ -6,9 +6,10 @@ const insertionSort = (inputArr) => {
       idx: i,
       value: inputArr[i],
     };
-    //
+    // j will be the values left of the pointer
     let j = i - 1;
     while (j >= 0 && inputArr[j] > key.value) {
+      // continue shifting values until j < key value, or j is start of the array
       animations.push({
         leftIdx: j,
         rightIdx: j + 1,
@@ -22,8 +23,9 @@ const insertionSort = (inputArr) => {
       inputArr[j + 1] = inputArr[j];
       j--;
     }
-    //
+    // place key
     inputArr[j + 1] = key.value;
+    // no swap
     if (j >= 0) {
       animations.push({
         leftIdx: j,

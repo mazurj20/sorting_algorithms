@@ -4,15 +4,19 @@ import getSelectionSortAnimations from "../SortingAlgorithms/SelectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/BubbleSort";
 import getQuickSortAnimations from "../SortingAlgorithms/QuickSort";
 import getInsertionSortAnimations from "../SortingAlgorithms/InsertionSort";
+//import getheapSortAnimations from "../SortingAlgorithms/getheapSortAnimations";
 import "./SortingVisualizer.css";
 
-const speed = 20;
-
-const numOfBars = 32;
-
-const primaryColor = "aqua";
-
+//settings
+const primaryColor = "darkcyan";
 const secondaryColor = "red";
+const speed = 10;
+const bars = 130;
+const barSize = {
+  top: 80,
+  bottom: 1,
+};
+const barWidth = 0.5;
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);
@@ -21,53 +25,72 @@ const SortingVisualizer = () => {
     resetArray();
   }, []);
 
+  // generate new array
   const resetArray = () => {
     const newArray = [];
-    for (let i = 0; i < numOfBars; i++) {
-      newArray.push(randomIntFromInterval(1, 80));
+    for (let i = 0; i < bars; i++) {
+      newArray.push(
+        Math.floor(
+          Math.random() * (barSize.top - barSize.bottom + 1) + barSize.bottom
+        )
+      );
     }
     setArray(newArray);
   };
 
-  const randomIntFromInterval = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  // algorithm visualizers
+  // merge sort
+  const mergeSort = async () => {
+    const { animations, sortedArray } = await getMergeSortAnimations(array);
+    const arrayBars = document.getElementsByClassName("bar");
+    for (let i = 0; i < animations.length; i++) {
+      const rightBarStyle = arrayBars[animations[i].rightIdx].style;
+      const leftBarStyle = arrayBars[animations[i].to].style;
+      setTimeout(() => {
+        if (rightBarStyle.backgroundColor === primaryColor) {
+          //shift array bars
+          for (let j = animations[i].rightIdx; j > 0; j--) {
+            arrayBars[j].height = arrayBars[j - 1].height;
+          }
+          //place array bar
+          leftBarStyle.height = `${animations[i].value}vh`;
+        }
+        rightBarStyle.backgroundColor === secondaryColor
+          ? (rightBarStyle.backgroundColor = primaryColor)
+          : (rightBarStyle.backgroundColor = secondaryColor);
+      }, (i * speed) / 2);
+    }
+    setArray(sortedArray);
   };
 
-  const selectionSort = () => {
-    const animations = getSelectionSortAnimations(array);
+  const selectionSort = async () => {
+    const animations = await getSelectionSortAnimations(array);
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array-bar");
-      if (animations[i].length === 4) {
-        setTimeout(() => {
-          const barOneStyle = arrayBars[animations[i][0]].style;
-          const barTwoStyle = arrayBars[animations[i][2]].style;
-          barOneStyle.height = `${animations[i][3]}vh`;
-          barTwoStyle.height = `${animations[i][1]}vh`;
-          barOneStyle.backgroundColor = primaryColor;
-          barTwoStyle.backgroundColor = primaryColor;
-        }, i * speed);
-      } else {
-        setTimeout(() => {
-          const barOneStyle = arrayBars[animations[i][0]].style;
-          const barTwoStyle = arrayBars[animations[i][1]].style;
-          barOneStyle.backgroundColor = secondaryColor;
-          barTwoStyle.backgroundColor = secondaryColor;
-        }, i * speed);
-      }
+      const arrayBars = document.getElementsByClassName("bar");
+      setTimeout(() => {
+        const leftBarStyle = arrayBars[animations[i][0]].style;
+        const rightBarStyle = arrayBars[animations[i][2]].style;
+        if (leftBarStyle.backgroundColor === primaryColor) {
+          leftBarStyle.height = `${animations[i][3]}vh`;
+          rightBarStyle.height = `${animations[i][1]}vh`;
+          leftBarStyle.backgroundColor = secondaryColor;
+          rightBarStyle.backgroundColor = secondaryColor;
+        } else {
+          leftBarStyle.backgroundColor = primaryColor;
+          rightBarStyle.backgroundColor = primaryColor;
+        }
+      }, i * speed);
     }
   };
 
-  const quickSort = () => {
-    const animations = getQuickSortAnimations(array);
-    console.log(animations);
+  const quickSort = async () => {
+    const animations = await getQuickSortAnimations(array);
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array-bar");
-
+      const arrayBars = document.getElementsByClassName("bar");
       setTimeout(() => {
-        const barOneStyle = arrayBars[animations[i].leftIdx].style;
-        const barTwoStyle = arrayBars[animations[i].rightIdx].style;
+        const leftBarStyle = arrayBars[animations[i].leftIdx].style;
+        const rightBarStyle = arrayBars[animations[i].rightIdx].style;
         const pivotBarStyle = arrayBars[animations[i].pivot].style;
-
         //pivot bar
         if (i > 0) {
           if (animations[i].pivot !== animations[i - 1].pivot) {
@@ -79,28 +102,26 @@ const SortingVisualizer = () => {
             pivotBarStyle.backgroundColor = "black";
           }
         }
-
         //compared bars
         if (
-          barTwoStyle.backgroundColor === primaryColor ||
-          barTwoStyle.backgroundColor === "black"
+          rightBarStyle.backgroundColor === primaryColor ||
+          rightBarStyle.backgroundColor === "black"
         ) {
-          barOneStyle.height = `${animations[i].rightValue}vh`;
-          barTwoStyle.height = `${animations[i].leftValue}vh`;
+          leftBarStyle.height = `${animations[i].rightValue}vh`;
+          rightBarStyle.height = `${animations[i].leftValue}vh`;
         }
         if (
-          barTwoStyle.backgroundColor === secondaryColor ||
-          barTwoStyle.backgroundColor === "black"
+          rightBarStyle.backgroundColor === secondaryColor ||
+          rightBarStyle.backgroundColor === "black"
         ) {
-          barOneStyle.backgroundColor = primaryColor;
-          barTwoStyle.backgroundColor = primaryColor;
+          leftBarStyle.backgroundColor = primaryColor;
+          rightBarStyle.backgroundColor = primaryColor;
         } else {
-          barOneStyle.backgroundColor = secondaryColor;
-          barTwoStyle.backgroundColor = secondaryColor;
+          leftBarStyle.backgroundColor = secondaryColor;
+          rightBarStyle.backgroundColor = secondaryColor;
         }
-
         // end case
-        if (i === animations.length) {
+        if (i === animations.length - 1) {
           for (let j = 0; j < arrayBars.length; j++) {
             arrayBars[j].style.backgroundColor = primaryColor;
           }
@@ -109,67 +130,68 @@ const SortingVisualizer = () => {
     }
   };
 
-  const heapSort = () => {};
+  const heapSort = () => {
+    //const animations = getheapSortAnimations(array);
+    //console.log(animations);
+  };
 
   const bubbleSort = async () => {
     const animations = await getBubbleSortAnimations(array);
-    console.log(animations);
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array-bar");
+      const arrayBars = document.getElementsByClassName("bar");
       setTimeout(() => {
-        const barOneStyle = arrayBars[animations[i].leftIdx].style;
-        const barTwoStyle = arrayBars[animations[i].rightIdx].style;
-
+        const leftBarStyle = arrayBars[animations[i].leftIdx].style;
+        const rightBarStyle = arrayBars[animations[i].rightIdx].style;
         if (
           animations[i].swap &&
-          barTwoStyle.backgroundColor === primaryColor
+          rightBarStyle.backgroundColor === primaryColor
         ) {
-          let temp = barOneStyle.height;
-          barOneStyle.height = barTwoStyle.height;
-          barTwoStyle.height = temp;
+          let temp = leftBarStyle.height;
+          leftBarStyle.height = rightBarStyle.height;
+          rightBarStyle.height = temp;
         }
-        barTwoStyle.backgroundColor === secondaryColor
-          ? (barTwoStyle.backgroundColor = primaryColor)
-          : (barTwoStyle.backgroundColor = secondaryColor);
-      }, (i * speed) / 20);
+        rightBarStyle.backgroundColor === secondaryColor
+          ? (rightBarStyle.backgroundColor = primaryColor)
+          : (rightBarStyle.backgroundColor = secondaryColor);
+      }, (i * speed) / 28);
     }
   };
 
-  const insertionSort = () => {
-    const animations = getInsertionSortAnimations(array);
-    console.log(animations);
+  const insertionSort = async () => {
+    const animations = await getInsertionSortAnimations(array);
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array-bar");
-      const barOneStyle = arrayBars[animations[i].leftIdx].style;
-      const barTwoStyle = arrayBars[animations[i].rightIdx].style;
+      const arrayBars = document.getElementsByClassName("bar");
+      const leftBarStyle = arrayBars[animations[i].leftIdx].style;
+      const rightBarStyle = arrayBars[animations[i].rightIdx].style;
       setTimeout(() => {
         if (
           animations[i].swap &&
-          barTwoStyle.backgroundColor === primaryColor
+          rightBarStyle.backgroundColor === primaryColor
         ) {
-          let temp = barOneStyle.height;
-          barOneStyle.height = barTwoStyle.height;
-          barTwoStyle.height = temp;
+          let temp = leftBarStyle.height;
+          leftBarStyle.height = rightBarStyle.height;
+          rightBarStyle.height = temp;
         }
-        barTwoStyle.backgroundColor === secondaryColor
-          ? (barTwoStyle.backgroundColor = primaryColor)
-          : (barTwoStyle.backgroundColor = secondaryColor);
-      }, i * speed);
+        rightBarStyle.backgroundColor === secondaryColor
+          ? (rightBarStyle.backgroundColor = primaryColor)
+          : (rightBarStyle.backgroundColor = secondaryColor);
+      }, (i * speed) / 2);
     }
   };
 
   return (
     <div className="SortingVisualizer_container">
       <div className="array-container">
-        {array.map((value, idx) => (
+        {array.map((value, i) => (
           <div
-            className="array-bar"
-            key={idx}
+            className="bar"
             style={{
               backgroundColor: primaryColor,
               height: `${value}vh`,
+              width: `${barWidth}vw`,
             }}
-          ></div>
+            key={i}
+          />
         ))}
       </div>
       <div className="buttons">
