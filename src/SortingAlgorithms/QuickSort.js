@@ -4,10 +4,10 @@ const getQuickSortAnimation = (arr) => {
   return animations;
 };
 
-function swap(arr, i, j) {
+const swap = (arr, i, j) => {
   [arr[i], arr[j]] = [arr[j], arr[i]];
-}
-function partition(arr, left, right, animations) {
+};
+const partition = (arr, left, right, animations) => {
   var pivotIdx = Math.floor((right + left) / 2);
   var pivot = {
     idx: pivotIdx,
@@ -46,9 +46,9 @@ function partition(arr, left, right, animations) {
     }
   }
   return i;
-}
+};
 
-function quickSort(arr, left, right, animations) {
+const quickSort = (arr, left, right, animations) => {
   let index;
   if (arr.length > 1) {
     index = partition(arr, left, right, animations);
@@ -60,6 +60,6 @@ function quickSort(arr, left, right, animations) {
     }
   }
   return arr;
-}
+};
 
 export default getQuickSortAnimation;

@@ -16,7 +16,7 @@ const getMergeSortAnimations = (unsortedArray) => {
 };
 
 // recursively divide initial array until base case is reached
-function mergeSort(arr, animations) {
+const mergeSort = (arr, animations) => {
   // if its already at 1 it can be considered sorted
   if (arr.length <= 1) {
     return arr;
@@ -35,10 +35,10 @@ function mergeSort(arr, animations) {
     mergeSort(right, animations),
     animations
   );
-}
+};
 
 // merge left and right arrays
-function merge(left, right, animations) {
+const merge = (left, right, animations) => {
   // keep track of the original indecies coming in in order from left to right
   let awardableIndecies = [];
   for (let i = 0; i < left.length; i++) {
@@ -135,6 +135,6 @@ function merge(left, right, animations) {
   return resultArray
     .concat(left.slice(leftIndex))
     .concat(right.slice(rightIndex));
-}
+};
 
 export default getMergeSortAnimations;
