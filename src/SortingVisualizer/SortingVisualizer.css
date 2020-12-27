@@ -7,7 +7,10 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 90vw;
+  position: absolute;
+  top: 15vh;
+  left: 2.5vw;
+  width: 95vw;
   height: 80vh;
 }
 
@@ -16,10 +19,42 @@
   margin: 0 1px;
 }
 
-.buttons {
-  padding: 5px;
+.navbar_top {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(255, 255, 255);
+  height: 6vh;
 }
 
-.buttons > button {
-  margin: 5px;
+button {
+  height: 4vh;
+  min-width: 7vw;
+  margin: 5px 10px;
+  border-radius: 3px;
+  border: none;
+}
+button:hover {
+  background-color: rgb(207, 212, 216);
+}
+button:focus {
+  outline: none;
+}
+.navbar_sort,
+.navbar_choices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar_selected {
+  padding: 5px;
+}
+.navbar_settings {
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(64, 116, 228, 0.452);
+}
+.navbar_settings_right {
+  display: flex;
 }

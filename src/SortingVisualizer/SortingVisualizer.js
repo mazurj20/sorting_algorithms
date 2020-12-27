@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SettingChoices from "./SettingChoices.js";
 import getMergeSortAnimations from "../SortingAlgorithms/MergeSort.js";
 import getSelectionSortAnimations from "../SortingAlgorithms/SelectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/BubbleSort";
@@ -8,22 +9,23 @@ import getInsertionSortAnimations from "../SortingAlgorithms/InsertionSort";
 import "./SortingVisualizer.css";
 
 //settings
-const primaryColor = "darkcyan";
-const secondaryColor = "red";
-const speed = 10;
-const bars = 130;
-const barSize = {
+const primaryColor = "slategrey";
+const secondaryColor = "bisque";
+const barLength = {
   top: 80,
   bottom: 1,
 };
-const barWidth = 0.5;
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);
+  const [algo, setAlgo] = useState(null);
+  const [speed, setSpeed] = useState(10);
+  const [bars, setBars] = useState(100);
+  const [barWidth, setBarWidth] = useState(0.8);
 
   useEffect(() => {
     resetArray();
-  }, []);
+  }, [bars]);
 
   // generate new array
   const resetArray = () => {
@@ -31,7 +33,8 @@ const SortingVisualizer = () => {
     for (let i = 0; i < bars; i++) {
       newArray.push(
         Math.floor(
-          Math.random() * (barSize.top - barSize.bottom + 1) + barSize.bottom
+          Math.random() * (barLength.top - barLength.bottom + 1) +
+            barLength.bottom
         )
       );
     }
@@ -79,7 +82,7 @@ const SortingVisualizer = () => {
           leftBarStyle.backgroundColor = primaryColor;
           rightBarStyle.backgroundColor = primaryColor;
         }
-      }, i * speed);
+      }, i * speed * 3);
     }
   };
 
@@ -97,22 +100,22 @@ const SortingVisualizer = () => {
             arrayBars[
               animations[i - 1].pivot
             ].style.backgroundColor = primaryColor;
-            pivotBarStyle.backgroundColor = "black";
+            pivotBarStyle.backgroundColor = "aqua";
           } else {
-            pivotBarStyle.backgroundColor = "black";
+            pivotBarStyle.backgroundColor = "aqua";
           }
         }
         //compared bars
         if (
           rightBarStyle.backgroundColor === primaryColor ||
-          rightBarStyle.backgroundColor === "black"
+          rightBarStyle.backgroundColor === "aqua"
         ) {
           leftBarStyle.height = `${animations[i].rightValue}vh`;
           rightBarStyle.height = `${animations[i].leftValue}vh`;
         }
         if (
           rightBarStyle.backgroundColor === secondaryColor ||
-          rightBarStyle.backgroundColor === "black"
+          rightBarStyle.backgroundColor === "aqua"
         ) {
           leftBarStyle.backgroundColor = primaryColor;
           rightBarStyle.backgroundColor = primaryColor;
@@ -126,7 +129,7 @@ const SortingVisualizer = () => {
             arrayBars[j].style.backgroundColor = primaryColor;
           }
         }
-      }, i * speed);
+      }, i * speed * 2);
     }
   };
 
@@ -153,7 +156,7 @@ const SortingVisualizer = () => {
         rightBarStyle.backgroundColor === secondaryColor
           ? (rightBarStyle.backgroundColor = primaryColor)
           : (rightBarStyle.backgroundColor = secondaryColor);
-      }, (i * speed) / 28);
+      }, (i * speed) / 10);
     }
   };
 
@@ -175,12 +178,136 @@ const SortingVisualizer = () => {
         rightBarStyle.backgroundColor === secondaryColor
           ? (rightBarStyle.backgroundColor = primaryColor)
           : (rightBarStyle.backgroundColor = secondaryColor);
-      }, (i * speed) / 2);
+      }, (i * speed) / 6);
+    }
+  };
+  const sort = () => {
+    switch (algo) {
+      case "mergeSort":
+        return mergeSort;
+      case "selectionSort":
+        return selectionSort;
+      case "quickSort":
+        return quickSort;
+      case "heapSort":
+        return heapSort;
+      case "bubbleSort":
+        return bubbleSort;
+      case "insertionSort":
+        return insertionSort;
+      default:
+        return "select an algorithm";
     }
   };
 
   return (
     <div className="SortingVisualizer_container">
+      <div className="navbar_top">
+        <div className="navbar_sort">
+          <div className="navbar_selected" style={{ color: primaryColor }}>
+            {algo ? (
+              <h3>{`Selected: ${algo}`}</h3>
+            ) : (
+              <h3>Please select a sorting algorithm!</h3>
+            )}
+          </div>
+        </div>
+        <div className="navbar_choices">
+          {algo === "mergeSort" ? (
+            <button
+              onClick={() => setAlgo("mergeSort")}
+              style={{ backgroundColor: "lightgrey" }}
+            >
+              Merge Sort
+            </button>
+          ) : (
+            <button onClick={() => setAlgo("mergeSort")}>Merge Sort</button>
+          )}
+          {algo === "selectionSort" ? (
+            <button
+              onClick={() => setAlgo("selectionSort")}
+              style={{ backgroundColor: "lightgrey" }}
+            >
+              Selection Sort
+            </button>
+          ) : (
+            <button onClick={() => setAlgo("selectionSort")}>
+              Selection Sort
+            </button>
+          )}
+          {algo === "quickSort" ? (
+            <button
+              onClick={() => setAlgo("quickSort")}
+              style={{ backgroundColor: "lightgrey" }}
+            >
+              Quick Sort
+            </button>
+          ) : (
+            <button onClick={() => setAlgo("quickSort")}>Quick Sort</button>
+          )}
+          {algo === "heapSort" ? (
+            <button
+              onClick={() => setAlgo("heapSort")}
+              style={{ backgroundColor: "lightgrey" }}
+            >
+              Heap Sort
+            </button>
+          ) : (
+            <button onClick={() => setAlgo("heapSort")}>Heap Sort</button>
+          )}
+          {algo === "bubbleSort" ? (
+            <button
+              onClick={() => setAlgo("bubbleSort")}
+              style={{ backgroundColor: "lightgrey" }}
+            >
+              Bubble Sort
+            </button>
+          ) : (
+            <button onClick={() => setAlgo("bubbleSort")}>Bubble Sort</button>
+          )}
+          {algo === "insertionSort" ? (
+            <button
+              onClick={() => setAlgo("insertionSort")}
+              style={{ backgroundColor: "lightgrey" }}
+            >
+              Insertion Sort
+            </button>
+          ) : (
+            <button onClick={() => setAlgo("insertionSort")}>
+              Insertion Sort
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="navbar_settings">
+        <div>
+          <button onClick={sort()} style={{ backgroundColor: "lightgreen" }}>
+            Sort
+          </button>
+          <button
+            onClick={() => {
+              window.location.reload();
+            }}
+            style={{ backgroundColor: "lightcoral" }}
+          >
+            Cancel Operation
+          </button>
+          <button
+            onClick={() => {
+              resetArray();
+            }}
+          >
+            Generate New Array
+          </button>
+        </div>
+        <div className="navbar_settings_right">
+          <SettingChoices
+            setSpeed={setSpeed}
+            setBars={setBars}
+            setBarWidth={setBarWidth}
+          />
+        </div>
+      </div>
       <div className="array-container">
         {array.map((value, i) => (
           <div
@@ -193,15 +320,6 @@ const SortingVisualizer = () => {
             key={i}
           />
         ))}
-      </div>
-      <div className="buttons">
-        <button onClick={() => resetArray()}>Generate New Array</button>
-        <button onClick={() => mergeSort()}>Merge Sort</button>
-        <button onClick={() => selectionSort()}>Selection Sort</button>
-        <button onClick={() => quickSort()}>Quick Sort</button>
-        <button onClick={() => heapSort()}>Heap Sort</button>
-        <button onClick={() => bubbleSort()}>Bubble Sort</button>
-        <button onClick={() => insertionSort()}>Insertion Sort</button>
       </div>
     </div>
   );

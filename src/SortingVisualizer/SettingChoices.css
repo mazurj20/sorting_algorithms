@@ -1,0 +1,30 @@
+.navbar_bars_container,
+.navbar_speed_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}
+.navbar_speed,
+.navbar_bars {
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(233, 231, 231);
+  border-radius: 5px;
+  height: 3.5vh;
+  cursor: default;
+}
+.speed_choice,
+.bar_choice {
+  height: 100%;
+  min-width: 4vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: small;
+  padding: 0 5px;
+  cursor: default;
+}
