@@ -1,1 +1,1 @@
-### deployed: https://tmurphy-sorting-algorithms.netlify.app/
+## Deployed: https://tmurphy-sorting-algorithms.netlify.app/
