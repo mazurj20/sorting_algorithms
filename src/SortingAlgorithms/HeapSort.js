@@ -1,54 +1,46 @@
-/*
-let animations = [];
-var array_length;
-
-function heap_root(input, i) {
-  var left = 2 * i + 1;
-  var right = 2 * i + 2;
-  var max = i;
-
-  if (left < array_length && input[left] > input[max]) {
-    max = left;
+export default function getHeapSortAnimations(arr) {
+  let animations = [];
+  let len = arr.length;
+  for (let i = Math.floor(len / 2) - 1; i >= 0; i--) {
+    getMaxHeap(arr, i, len, animations);
   }
-
-  if (right < array_length && input[right] > input[max]) {
-    max = right;
+  for (let i = len - 1; i >= 0; i--) {
+    swap(arr, 0, i, animations); //Delete root element
+    getMaxHeap(arr, 0, i, animations);
   }
-
-  if (max != i) {
-    swap(input, i, max);
-    heap_root(input, max);
-  }
+  return animations;
 }
 
-function swap(input, index_A, index_B) {
-  var temp = input[index_A];
+function getMaxHeap(arr, i, len, animations) {
+  let left = 2 * i; //Left child index
+  let right = 2 * i + 1; //Right child index
+  let maximum;
+  if (right < len) {
+    //Check if right child exists
+    if (arr[left] >= arr[right]) {
+      //Compares children to find maximum
+      maximum = left;
+    } else {
+      maximum = right;
+    }
+  } else if (left < len) {
+    //Check if left child exists
+    maximum = left;
+  } else return;
+  if (arr[i] < arr[maximum]) {
+    //swap if the largest child is greater than parent
+    swap(arr, i, maximum, animations);
+    getMaxHeap(arr, maximum, len, animations);
+  }
+  return;
+}
 
-  getMergeSortAnimations.push({
-    leftIdx: 3,
-    rightIdx: 4,
+function swap(arr, i, j, animations) {
+  animations.push({
+    leftIdx: i,
+    rightIdx: j,
+    leftValue: arr[i],
+    rightValue: arr[j],
   });
-
-  input[index_A] = input[index_B];
-  input[index_B] = temp;
+  [arr[i], arr[j]] = [arr[j], arr[i]];
 }
-
-function heapSort(input) {
-  array_length = input.length;
-
-  for (var i = Math.floor(array_length / 2); i >= 0; i -= 1) {
-    heap_root(input, i);
-  }
-
-  for (i = input.length - 1; i > 0; i--) {
-    swap(input, 0, i);
-    array_length--;
-
-    heap_root(input, 0);
-  }
-}
-
-var arr = [3, 0, 2, 5, -1, 4, 1];
-heapSort(arr);
-console.log(arr);
-*/
