@@ -5,7 +5,7 @@ import getSelectionSortAnimations from "../SortingAlgorithms/SelectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/BubbleSort";
 import getQuickSortAnimations from "../SortingAlgorithms/QuickSort";
 import getInsertionSortAnimations from "../SortingAlgorithms/InsertionSort";
-//import getheapSortAnimations from "../SortingAlgorithms/getheapSortAnimations";
+import getHeapSortAnimations from "../SortingAlgorithms/HeapSort";
 import "./SortingVisualizer.css";
 
 //settings
@@ -134,8 +134,17 @@ const SortingVisualizer = () => {
   };
 
   const heapSort = () => {
-    //const animations = getheapSortAnimations(array);
-    //console.log(animations);
+    const animations = getHeapSortAnimations(array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("bar");
+      const leftBarStyle = arrayBars[animations[i].leftIdx].style;
+      const rightBarStyle = arrayBars[animations[i].rightIdx].style;
+      setTimeout(() => {
+        leftBarStyle.height = `${animations[i].rightValue}vh`;
+        rightBarStyle.height = `${animations[i].leftValue}vh`;
+      }, i * speed);
+    }
   };
 
   const bubbleSort = async () => {
@@ -201,10 +210,10 @@ const SortingVisualizer = () => {
   };
 
   return (
-    <div className="SortingVisualizer_container">
-      <div className="navbar_top">
-        <div className="navbar_sort">
-          <div className="navbar_selected" style={{ color: primaryColor }}>
+    <div className='SortingVisualizer_container'>
+      <div className='navbar_top'>
+        <div className='navbar_sort'>
+          <div className='navbar_selected' style={{ color: primaryColor }}>
             {algo ? (
               <h3>{`Selected: ${algo}`}</h3>
             ) : (
@@ -212,7 +221,7 @@ const SortingVisualizer = () => {
             )}
           </div>
         </div>
-        <div className="navbar_choices">
+        <div className='navbar_choices'>
           {algo === "mergeSort" ? (
             <button
               onClick={() => setAlgo("mergeSort")}
@@ -279,7 +288,7 @@ const SortingVisualizer = () => {
           )}
         </div>
       </div>
-      <div className="navbar_settings">
+      <div className='navbar_settings'>
         <div>
           <button onClick={sort()} style={{ backgroundColor: "lightgreen" }}>
             Sort
@@ -294,13 +303,13 @@ const SortingVisualizer = () => {
           </button>
           <button
             onClick={() => {
-              resetArray();
+              window.location.reload();
             }}
           >
             Generate New Array
           </button>
         </div>
-        <div className="navbar_settings_right">
+        <div className='navbar_settings_right'>
           <SettingChoices
             setSpeed={setSpeed}
             setBars={setBars}
@@ -308,10 +317,10 @@ const SortingVisualizer = () => {
           />
         </div>
       </div>
-      <div className="array-container">
+      <div className='array-container'>
         {array.map((value, i) => (
           <div
-            className="bar"
+            className='bar'
             style={{
               backgroundColor: primaryColor,
               height: `${value}vh`,
