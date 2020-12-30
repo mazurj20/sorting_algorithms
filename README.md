@@ -1,9 +1,7 @@
-## Deployed: https://tmurphy-sorting-algorithms.netlify.app/
-
 # Sorting Algorithm Visualizer
 
 - [SortingAlgorithmVisualizer](#Sorting Algorithm Visualizer)
-  - [Installation](#installation)
+  - [Installation](#Deployment)
   - [Deployment](#deployment)
   - [Font-end](#front-end)
     - [Technologies Used](#technologies-used)
@@ -18,7 +16,9 @@
 
 Information and instructions on setting up a development environment can be found in the [wiki](https://github.com/SEI-39/developerverse/wiki/Development-Environment)
 
-## Sorting Algorithm Visualizer
+## Deployment
+
+Deployed: https://tmurphy-sorting-algorithms.netlify.app/
 
 For information on Netlify deployment see the Wiki @ [Netlify](https://github.com/SEI-39/developerverse/wiki/Deployed-via-Netlify)
 
