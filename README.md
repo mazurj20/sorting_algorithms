@@ -2,7 +2,7 @@
 
 # Developerverse
 
-- [Developerverse](#developerverse)
+- [Sorting Algorithm Visualizer](#Sorting Algorithm Visualizer)
   - [Installation](#installation)
   - [Deployment](#deployment)
   - [Font-end](#front-end)
@@ -18,7 +18,7 @@
 
 Information and instructions on setting up a development environment can be found in the [wiki](https://github.com/SEI-39/developerverse/wiki/Development-Environment)
 
-## Deployment
+## Sorting Algorithm Visualizer
 
 For information on Netlify deployment see the Wiki @ [Netlify](https://github.com/SEI-39/developerverse/wiki/Deployed-via-Netlify)
 
@@ -81,5 +81,3 @@ The following routes are available
 | Create          | /users/create           | POST          | Creates a user and returns an authentication token                      |
 
 Routes marked with `*` need authentication to be accessed
-
-![alt text](https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png)
