@@ -1,6 +1,6 @@
 # Sorting Algorithm Visualizer
 
-- [SortingAlgorithmVisualizer](#Installation)
+- [Introduction](#Introduction)
   - [Installation](#Deployment)
   - [Deployment](#deployment)
   - [Font-end](#front-end)
@@ -12,7 +12,7 @@
     - [Authentication](#authentication)
     - [Routes Available](#routes-available)
 
-## Installation
+## Introduction
 
 Information and instructions on setting up a development environment can be found in the [wiki](https://github.com/SEI-39/developerverse/wiki/Development-Environment)
 
