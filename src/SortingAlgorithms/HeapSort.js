@@ -1,31 +1,66 @@
 export default function getHeapSortAnimations(arr) {
   let animations = [];
   let len = arr.length;
+  //i is the last parent node in the heap
   for (let i = Math.floor(len / 2) - 1; i >= 0; i--) {
     getMaxHeap(arr, i, len, animations);
   }
+  //now we have the max heap and we need to switch the last child with the root element
+  //here, i is the last child in the heap
   for (let i = len - 1; i >= 0; i--) {
-    swap(arr, 0, i, animations); //Delete root element
-    getMaxHeap(arr, 0, i, animations);
+    swap(arr, 0, i, animations); //delete the root element
+    getMaxHeap(arr, 0, i, animations); //repeat
   }
   return animations;
 }
 
 function getMaxHeap(arr, i, len, animations) {
-  let left = 2 * i; //Left child index
-  let right = 2 * i + 1; //Right child index
+  let left = 2 * i + 1; //left child idx
+  let right = 2 * i; //right child idx
   let maximum;
-  if (right < len) {
-    //Check if right child exists
-    if (arr[left] >= arr[right]) {
-      //Compares children to find maximum
-      maximum = left;
-    } else {
-      maximum = right;
-    }
-  } else if (left < len) {
+  if (left < len) {
     //Check if left child exists
-    maximum = left;
+    if (arr[right] >= arr[left]) {
+      //change colors for comparisons
+      animations.push({
+        leftIdx: left,
+        rightIdx: right,
+        leftValue: arr[left],
+        rightValue: arr[right],
+        colorChange: true,
+      });
+      //change colors back
+      animations.push({
+        leftIdx: left,
+        rightIdx: right,
+        leftValue: arr[left],
+        rightValue: arr[right],
+        colorChange: true,
+        revert: true,
+      });
+      //Compares children to find maximum
+      maximum = right;
+    } else {
+      animations.push({
+        leftIdx: left,
+        rightIdx: right,
+        leftValue: arr[left],
+        rightValue: arr[right],
+        colorChange: true,
+      });
+      animations.push({
+        leftIdx: left,
+        rightIdx: right,
+        leftValue: arr[left],
+        rightValue: arr[right],
+        colorChange: true,
+        revert: true,
+      });
+      maximum = left;
+    }
+  } else if (right < len) {
+    //check if right child exists
+    maximum = right;
   } else return;
   if (arr[i] < arr[maximum]) {
     //swap if the largest child is greater than parent

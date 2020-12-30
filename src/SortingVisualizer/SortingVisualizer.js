@@ -10,7 +10,7 @@ import "./SortingVisualizer.css";
 
 //settings
 const primaryColor = "slategrey";
-const secondaryColor = "bisque";
+const secondaryColor = "coral";
 const barLength = {
   top: 80,
   bottom: 1,
@@ -141,8 +141,18 @@ const SortingVisualizer = () => {
       const leftBarStyle = arrayBars[animations[i].leftIdx].style;
       const rightBarStyle = arrayBars[animations[i].rightIdx].style;
       setTimeout(() => {
-        leftBarStyle.height = `${animations[i].rightValue}vh`;
-        rightBarStyle.height = `${animations[i].leftValue}vh`;
+        if (animations[i].colorChange) {
+          if (animations[i].revert) {
+            leftBarStyle.backgroundColor = primaryColor;
+            rightBarStyle.backgroundColor = primaryColor;
+          } else {
+            leftBarStyle.backgroundColor = secondaryColor;
+            rightBarStyle.backgroundColor = secondaryColor;
+          }
+        } else {
+          leftBarStyle.height = `${animations[i].rightValue}vh`;
+          rightBarStyle.height = `${animations[i].leftValue}vh`;
+        }
       }, i * speed);
     }
   };
