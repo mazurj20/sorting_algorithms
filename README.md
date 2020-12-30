@@ -1,8 +1,8 @@
 ## Deployed: https://tmurphy-sorting-algorithms.netlify.app/
 
-# Developerverse
+# Sorting Algorithm Visualizer
 
-- [Sorting Algorithm Visualizer](#Sorting Algorithm Visualizer)
+- [SortingAlgorithmVisualizer](#Sorting Algorithm Visualizer)
   - [Installation](#installation)
   - [Deployment](#deployment)
   - [Font-end](#front-end)
