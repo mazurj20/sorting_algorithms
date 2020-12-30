@@ -1,6 +1,6 @@
 # Sorting Algorithm Visualizer
 
-- [SortingAlgorithmVisualizer](#Sorting Algorithm Visualizer)
+- [SortingAlgorithmVisualizer](#Installation)
   - [Installation](#Deployment)
   - [Deployment](#deployment)
   - [Font-end](#front-end)
