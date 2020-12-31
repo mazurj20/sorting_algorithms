@@ -59,7 +59,7 @@ function getMaxHeap(arr, i, len, animations) {
     swap(arr, i, max, animations);
     getMaxHeap(arr, max, len, animations);
   }
-  return arr;
+  //return arr;
 }
 
 function swap(arr, i, j, animations) {

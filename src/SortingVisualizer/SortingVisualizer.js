@@ -13,7 +13,7 @@ const primaryColor = "slategrey";
 const secondaryColor = "coral";
 const barLength = {
   top: 80,
-  bottom: 1,
+  bottom: 3,
 };
 
 const SortingVisualizer = () => {

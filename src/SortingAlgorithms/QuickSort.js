@@ -8,12 +8,12 @@ const swap = (arr, i, j) => {
   [arr[i], arr[j]] = [arr[j], arr[i]];
 };
 const partition = (arr, left, right, animations) => {
-  var pivotIdx = Math.floor((right + left) / 2);
-  var pivot = {
+  let pivotIdx = Math.floor((right + left) / 2);
+  let pivot = {
     idx: pivotIdx,
     value: arr[pivotIdx],
   };
-  var i = left,
+  let i = left,
     j = right;
   while (i <= j) {
     while (arr[i] < pivot.value) {
