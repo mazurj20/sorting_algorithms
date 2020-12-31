@@ -16,12 +16,15 @@ const partition = (arr, left, right, animations) => {
   let i = left,
     j = right;
   while (i <= j) {
+    //left pointer advances when values are less than pivot
     while (arr[i] < pivot.value) {
       i++;
     }
+    //right pointer advances(backwards) when values are greater than pivot
     while (arr[j] > pivot.value) {
       j--;
     }
+    //both while loops finish so we swap idxs
     if (i <= j) {
       if (i !== j) {
         animations.push({
@@ -46,12 +49,14 @@ const partition = (arr, left, right, animations) => {
     }
   }
   return i;
+  //i becomes the index by which we partition the array
 };
 
 const quickSort = (arr, left, right, animations) => {
   let index;
   if (arr.length > 1) {
     index = partition(arr, left, right, animations);
+    //do quicksort on both halves
     if (left < index - 1) {
       quickSort(arr, left, index - 1, animations);
     }
