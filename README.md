@@ -1,20 +1,7 @@
 # Sorting Algorithm Visualizer
 
-- [Introduction](#Introduction)
-  - [Installation](#Deployment)
-  - [Deployment](#deployment)
-  - [Font-end](#front-end)
-    - [Technologies Used](#technologies-used)
-    - [Dependencies](#dependencies)
-  - [Back-end](#back-end)
-    - [Technologies Used](#technologies-used-1)
-    - [Dependencies](#dependencies-1)
-    - [Authentication](#authentication)
-    - [Routes Available](#routes-available)
+Welcome to our sorting algorithm visualizer, a tool we build to visualize classic sorting algorithms. This project was inspired by Clement Mihailescu, whose sorting visualizer can be found at https://github.com/clementmihailescu/Sorting-Visualizer.  We found his work very interesting and challenged ourselves to come up with our own unique ways of working with these sorting algorithms to animate them in action. In doing so, we were able to develop a much better understanding of sorting algorithms and better our ability to think algorithmically. This project is deployed through Netlify and can be accessed at https://tmurphy-sorting-algorithms.netlify.app/.
 
-## Introduction
-
-Information and instructions on setting up a development environment can be found in the [wiki](https://github.com/SEI-39/developerverse/wiki/Development-Environment)
 
 ## Deployment
 
