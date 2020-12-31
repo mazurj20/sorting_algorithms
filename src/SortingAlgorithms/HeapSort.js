@@ -1,38 +1,65 @@
 export default function getHeapSortAnimations(arr) {
   let animations = [];
   let len = arr.length;
+  //i is the last parent node in the heap
   for (let i = Math.floor(len / 2) - 1; i >= 0; i--) {
     getMaxHeap(arr, i, len, animations);
   }
+  //now we have the max heap and we need to switch the last child with the root element
+  //here, i is the last child in the heap
   for (let i = len - 1; i >= 0; i--) {
-    swap(arr, 0, i, animations); //Delete root element
-    getMaxHeap(arr, 0, i, animations);
+    swap(arr, 0, i, animations); //delete the root element
+    getMaxHeap(arr, 0, i, animations); //repeat
   }
   return animations;
 }
 
 function getMaxHeap(arr, i, len, animations) {
-  let left = 2 * i; //Left child index
-  let right = 2 * i + 1; //Right child index
-  let maximum;
-  if (right < len) {
-    //Check if right child exists
-    if (arr[left] >= arr[right]) {
-      //Compares children to find maximum
-      maximum = left;
-    } else {
-      maximum = right;
-    }
-  } else if (left < len) {
-    //Check if left child exists
-    maximum = left;
-  } else return;
-  if (arr[i] < arr[maximum]) {
-    //swap if the largest child is greater than parent
-    swap(arr, i, maximum, animations);
-    getMaxHeap(arr, maximum, len, animations);
+  let left = 2 * i + 1; //left child idx
+  let right = left + 1; //right child idx
+  let max = i;
+  if (left < len && arr[left] > arr[max]) {
+    animations.push({
+      leftIdx: left,
+      rightIdx: max,
+      leftValue: arr[left],
+      rightValue: arr[max],
+      colorChange: true,
+    });
+
+    animations.push({
+      leftIdx: left,
+      rightIdx: max,
+      leftValue: arr[left],
+      rightValue: arr[max],
+      colorChange: true,
+      revert: true,
+    });
+    max = left;
   }
-  return;
+  if (right < len && arr[right] > arr[max]) {
+    animations.push({
+      leftIdx: right,
+      rightIdx: max,
+      leftValue: arr[right],
+      rightValue: arr[max],
+      colorChange: true,
+    });
+    animations.push({
+      leftIdx: right,
+      rightIdx: max,
+      leftValue: arr[right],
+      rightValue: arr[max],
+      colorChange: true,
+      revert: true,
+    });
+    max = right;
+  }
+  if (max !== i) {
+    swap(arr, i, max, animations);
+    getMaxHeap(arr, max, len, animations);
+  }
+  //return arr;
 }
 
 function swap(arr, i, j, animations) {
